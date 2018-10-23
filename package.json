@@ -1,6 +1,6 @@
 {
-  "name": "mock-private-registry",
-  "version": "1.1.2",
+  "name": "@probablyup/mock-private-registry",
+  "version": "1.0.0",
   "description": "Mock of a private npm registry, useful for testing npm-related stuff",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rexxars/mock-private-registry.git"
+    "url": "git+https://github.com/probablyup/mock-private-registry.git"
   },
   "keywords": [
     "npm",
@@ -18,9 +18,9 @@
   "author": "Espen Hovlandsdal <espen@hovlandsdal.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rexxars/mock-private-registry/issues"
+    "url": "https://github.com/probablyup/mock-private-registry/issues"
   },
-  "homepage": "https://github.com/rexxars/mock-private-registry#readme",
+  "homepage": "https://github.com/probablyup/mock-private-registry#readme",
   "devDependencies": {
     "got": "^5.6.0",
     "tape": "^4.6.0"
