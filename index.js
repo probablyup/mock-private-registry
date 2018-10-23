@@ -68,6 +68,11 @@ module.exports = function(options, callback) {
   var tokenType = options.tokenType || 'Bearer';
 
   var server = http.createServer(function(req, res) {
+    if (req.url === '/') {
+      res.statusCode = 200;
+      res.end('OK');
+    }
+
     if (req.method !== 'GET') {
       res.statusCode = 405;
       res.setHeader('Content-Type', 'application/json');
