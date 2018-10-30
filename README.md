@@ -11,17 +11,24 @@ npm install --save-dev @probablyup/mock-private-registry
 ## Usage
 
 ```js
-var registry = require('@probablyup/mock-private-registry');
-var got = require('got');
+const registry = require('@probablyup/mock-private-registry');
+const got = require('got');
 
-var token = 'MySecretToken';
+const token = 'MySecretToken';
 
-registry({ port: 18888, token }, function(err, server) {
+// make the tarballs by running `npm pack` in it
+const packages = [
+  ['my-package', '/absolute/path/to/private/package/tarball.tar.gz'],
+  ['my-other-package', '/absolute/path/to/other/private/package/tarball.tar.gz'],
+];
+
+registry({ packages, port: 18888, token }, function(err, server) {
   if (err) {
     throw err;
   }
 
-  var opts = { headers: { Authorization: 'Bearer ' + token }, json: true };
+  const opts = { headers: { Authorization: 'Bearer ' + token }, json: true };
+
   got('http://localhost:18888/@mockscope%2Ffoobar', opts)
     .then(function(res) {
       console.log('Package manifest: ', res.body);
@@ -36,10 +43,6 @@ registry({ port: 18888, token }, function(err, server) {
 ```
 
 Basically, call the module to spin up a server, and specify whatever you want to use as the valid authorization token. Second argument is a callback, which provides access to the server that is listening. This allows you to call `close()` on it when you're done.
-
-## Promise API
-
-There is an alternative promise API available if you require `@probablyup/mock-private-registry/promise`. Usage is the same except there is no callback. Instead, the function will return a promise.
 
 ## Options
 
@@ -58,6 +61,10 @@ There is an alternative promise API available if you require `@probablyup/mock-p
   ```
 
 - `debug` - Boolean. Set to true in order to have the registry mock spit back whatever is not matching, for instance the expected vs received token. Default: `false`
+
+## Promise API
+
+There is an alternative promise API available if you require `@probablyup/mock-private-registry/promise`. Usage is the same except there is no callback. Instead, the function will return a promise.
 
 ## Why
 
