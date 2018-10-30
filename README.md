@@ -1,4 +1,4 @@
-# mock-private-registry
+# @probablyup/mock-private-registry
 
 Mock of a private npm registry, useful for testing npm-related stuff. This is a fork of "mock-private-registry" with support for mocking multiple packages.
 
