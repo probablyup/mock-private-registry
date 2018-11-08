@@ -11,7 +11,7 @@ function generatePackageResponse(package, hostname, port) {
     name: package.name,
   });
 
-  tpl.versions['1.0.0'] = assign({}, tpl.versions['1.0.0'], {
+  tpl.versions['1.0.0'] = assign({}, tpl.versions['1.0.0'], package.moduleData, {
     _id: package.name + '@1.0.0',
     name: package.name,
     dist: assign({}, tpl.versions['1.0.0'].dist, {
@@ -47,15 +47,27 @@ module.exports = function(options, callback) {
    * Synthesize the URLs and sha of each mocked module to make matching easier later.
    */
   var packages = (options.packages || ['@mockscope/foobar', path.join(__dirname, 'mock.tgz')]).reduce(
-    (pkgs, [name, filePath]) => {
-      pkgs.push({
-        moduleName: name.slice(name.indexOf('/') + 1),
-        name,
-        path: '/' + softEncode(name),
-        tarballFilePath: filePath,
-        tarballPath: `/${name}/-/${name.slice(name.indexOf('/') + 1)}-1.0.0.tgz`,
-        sha: sha1(fs.readFileSync(filePath, { encoding: null })),
-      });
+    (pkgs, [descriptor, filePath]) => {
+      if (typeof descriptor === 'string') {
+        pkgs.push({
+          moduleName: descriptor.slice(descriptor.indexOf('/') + 1),
+          name: descriptor,
+          path: '/' + softEncode(descriptor),
+          tarballFilePath: filePath,
+          tarballPath: `/${descriptor}/-/${descriptor.slice(descriptor.indexOf('/') + 1)}-1.0.0.tgz`,
+          sha: sha1(fs.readFileSync(filePath, { encoding: null })),
+        });
+      } else {
+        pkgs.push({
+          moduleData: descriptor,
+          moduleName: descriptor.name.slice(descriptor.name.indexOf('/') + 1),
+          name: descriptor.name,
+          path: '/' + softEncode(descriptor.name),
+          tarballFilePath: filePath,
+          tarballPath: `/${descriptor.name}/-/${descriptor.name.slice(descriptor.name.indexOf('/') + 1)}-1.0.0.tgz`,
+          sha: sha1(fs.readFileSync(filePath, { encoding: null })),
+        });
+      }
 
       return pkgs;
     },

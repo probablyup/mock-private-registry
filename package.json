@@ -1,6 +1,6 @@
 {
   "name": "@probablyup/mock-private-registry",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Mock of a private npm registry, useful for testing npm-related stuff",
   "main": "index.js",
   "scripts": {

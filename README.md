@@ -54,11 +54,19 @@ Basically, call the module to spin up a server, and specify whatever you want to
 
 - `tokenType` - Type of token. Usually `Bearer` or `Basic`. Default: `Bearer`
 
-- `packages` - A two dimensional array of package name and tarball path, e.g.
+- `packages` - A two dimensional array of package data and tarball path, e.g.
 
   ```
   [['foo-package', '/local/path/to/foo-package.tar.gz']]
   ```
+
+  or
+
+  ```
+  [[{name: 'foo-package'}, '/local/path/to/foo-package.tar.gz']]
+  ```
+
+  In object form, you're basically supplying the contents of `package.json`.
 
 - `debug` - Boolean. Set to true in order to have the registry mock spit back whatever is not matching, for instance the expected vs received token. Default: `false`
 
